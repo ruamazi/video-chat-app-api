@@ -60,7 +60,7 @@ export const signUp = async (req, res) => {
    httpOnly: true,
    maxAge: 7 * 24 * 60 * 60 * 1000,
    secure: process.env.NODE_ENV === "production",
-   sameSite: "strict",
+   sameSite: "none",
   });
   const { password: _, ...userWithoutPassword } = user._doc;
   res.status(201).json(userWithoutPassword);
@@ -91,7 +91,7 @@ export const signIn = async (req, res) => {
    httpOnly: true,
    maxAge: 7 * 24 * 60 * 60 * 1000,
    secure: process.env.NODE_ENV === "production",
-   sameSite: "strict",
+   sameSite: "none",
   });
   const { password: _, ...userWithoutPassword } = user._doc;
   res.status(200).json(userWithoutPassword);
