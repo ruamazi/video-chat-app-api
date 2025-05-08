@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { connectDB } from "./lib/db.js";
+import mongoose from "mongoose";
 import authRoutes from "./routes/auth.js";
 import usersRoutes from "./routes/user.js";
 import chatRoutes from "./routes/chat.js";
@@ -20,6 +20,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+mongoose
+ .connect(process.env.MONGO_URI)
+ .then(() => console.log("MongoDB Connected"))
+ .catch((err) => console.log(err));
+
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
@@ -30,6 +35,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
- connectDB();
  console.log(`Server running on port:${port}`);
 });
