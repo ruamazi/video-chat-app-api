@@ -58,6 +58,7 @@ export const signUp = async (req, res) => {
   });
   res.cookie("videoCallChatToken", token, {
    httpOnly: true,
+   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
    maxAge: 7 * 24 * 60 * 60 * 1000,
    secure: process.env.NODE_ENV === "production",
   });
@@ -88,6 +89,7 @@ export const signIn = async (req, res) => {
   });
   res.cookie("videoCallChatToken", token, {
    httpOnly: true,
+   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
    maxAge: 7 * 24 * 60 * 60 * 1000,
    secure: process.env.NODE_ENV === "production",
   });
@@ -100,7 +102,12 @@ export const signIn = async (req, res) => {
 };
 
 export const signOut = async (req, res) => {
- res.clearCookie("videoCallChatToken");
+ res.clearCookie("videoCallChatToken", {
+  httpOnly: true,
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 0,
+  secure: process.env.NODE_ENV === "production",
+ });
  res.status(200).json({ message: "Signed out successfully" });
 };
 

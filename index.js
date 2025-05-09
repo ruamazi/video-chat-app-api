@@ -8,15 +8,15 @@ import usersRoutes from "./routes/user.js";
 import chatRoutes from "./routes/chat.js";
 import helmet from "helmet";
 
-const port = process.env.PORT || 3030;
 const app = express();
-app.use(helmet());
+
 app.use(
  cors({
   origin: process.env.CLIENT_URL,
   credentials: true,
  })
 );
+app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
 
@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
  res.json({ message: "Video Calling Realtime Chat App API" });
 });
 
+const port = process.env.PORT || 3030;
 app.listen(port, () => {
  console.log(`Server running on port:${port}`);
 });
